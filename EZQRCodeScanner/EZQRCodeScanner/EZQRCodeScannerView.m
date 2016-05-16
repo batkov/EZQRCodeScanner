@@ -24,11 +24,19 @@
 
 @implementation EZQRCodeScannerView
 
-- (void)drawRect:(CGRect)rect {
-    // 描绘中间透明四周半透明的View
-    [self drawTheFrontRect:rect];
-    // 设置AVFoundationComponent
-    [self setupAVCaptureComponent:rect];
+# pragma mark - Initial
+- (instancetype)init {
+    return [self initWithFrame:[UIScreen mainScreen].bounds];
+}
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        // 描绘中间透明四周半透明的View
+        [self drawTheFrontRect:frame];
+        // 设置AVFoundationComponent
+        [self setupAVCaptureComponent:frame];
+    }
+    return self;
 }
 
 # pragma mark - Running Control
@@ -64,7 +72,7 @@
 
 # pragma mark - 描绘中间透明四周半透明的View
 - (void)drawTheFrontRect:(CGRect)rect {
-    CGSize viewSize = self.bounds.size;
+    CGSize viewSize = rect.size;
     CGRect screenDrawRect = CGRectMake(0, 0, viewSize.width, viewSize.height);
     CGRect clearDrawRect = CGRectMake(viewSize.width * kPaddingAspect, viewSize.height * kPaddingAspect,
                                       viewSize.width * kClearRectAspect, viewSize.width * kClearRectAspect);
@@ -72,7 +80,7 @@
     
     [self drawFullScreen:ctx rect:screenDrawRect];
     [self addCenterClearRect:ctx rect:clearDrawRect];
-    [self addWhiteRect:ctx rect:rect];
+    [self addWhiteRect:ctx rect:clearDrawRect];
 }
 - (void)drawFullScreen:(CGContextRef)ctx rect:(CGRect)rect {
     CGContextSetRGBFillColor(ctx, 0, 0, 0, .5);
