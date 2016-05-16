@@ -31,12 +31,24 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        // 描绘中间透明四周半透明的View
-        [self drawTheFrontRect:frame];
         // 设置AVFoundationComponent
         [self setupAVCaptureComponent:frame];
     }
     return self;
+}
+
+#pragma mark - Initiliza ScannerLine
+- (UIView *)scannerLine {
+    if (!_scannerLine) {
+        CGRect viewPreviewRect = self.bounds;
+        _scannerLine = [[UIView alloc] initWithFrame:CGRectMake(viewPreviewRect.size.width * kPaddingAspect + 5, viewPreviewRect.size.height * kPaddingAspect, viewPreviewRect.size.width * kClearRectAspect - 10, 1)];
+        _scannerLine.backgroundColor = [UIColor blueColor];
+        [self addSubview:_scannerLine];
+        self.minBorder = self.frame.size.height * kPaddingAspect;
+        self.maxBorder = self.minBorder + self.frame.size.width * kClearRectAspect;
+        self.direction = YES;
+    }
+    return _scannerLine;
 }
 
 # pragma mark - Running Control
@@ -71,7 +83,7 @@
 }
 
 # pragma mark - 描绘中间透明四周半透明的View
-- (void)drawTheFrontRect:(CGRect)rect {
+- (void)drawRect:(CGRect)rect {
     CGSize viewSize = rect.size;
     CGRect screenDrawRect = CGRectMake(0, 0, viewSize.width, viewSize.height);
     CGRect clearDrawRect = CGRectMake(viewSize.width * kPaddingAspect, viewSize.height * kPaddingAspect,
@@ -115,7 +127,7 @@
     self.capturePreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
     [self.capturePreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     self.capturePreviewLayer.frame = CGRectMake(0, 0, rect.size.width, rect.size.height);
-    [self.superview.layer insertSublayer:self.capturePreviewLayer atIndex:0];
+    [self.layer insertSublayer:self.capturePreviewLayer atIndex:0];
     self.captureMeradataOutput.rectOfInterest = CGRectMake(kPaddingAspect, kPaddingAspect, kClearRectAspect * self.capturePreviewLayer.bounds.size.width / self.capturePreviewLayer.bounds.size.height , kClearRectAspect);
 }
 
