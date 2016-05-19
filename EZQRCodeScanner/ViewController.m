@@ -7,10 +7,10 @@
 //
 
 #import "ViewController.h"
-#import "EZQRCodeScannerView.h"
+#import "EZQRCodeScanner.h"
 
 @interface ViewController ()
-
+@property (strong, nonatomic) EZQRCodeScanner *test;
 @end
 
 @implementation ViewController
@@ -18,9 +18,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    EZQRCodeScannerView *testView = [[EZQRCodeScannerView alloc] initWithFrame:self.view.frame];
-    [self.view addSubview:testView];
-//    [testView startRunning];
+    EZQRCodeScanner *scanner = [[EZQRCodeScanner alloc] init];
+    [scanner startRunning];
+    [self.navigationController pushViewController:scanner animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
