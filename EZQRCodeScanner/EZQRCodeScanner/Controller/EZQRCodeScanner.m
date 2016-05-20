@@ -17,15 +17,22 @@
 @property (strong, nonatomic) AVCaptureDeviceInput *captureDeviceInput;
 @property (strong, nonatomic) AVCaptureMetadataOutput *captureMeradataOutput;
 
-@property (strong, nonatomic) EZQRCodeScannerView *scannerView;
+@property (strong, nonatomic) EZQRCodeScannerView *scannerView;     // 整个Background，而非扫描区域
+@property (strong, nonatomic) UILabel *tipsLabel;
+@property (strong, nonatomic) UIButton *flashLight;
+@property (strong, nonatomic) UIButton *loadPic;
+
 @end
 
 @implementation EZQRCodeScanner
-
+# pragma mark - Initial
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
     [self setupAVCaptureComponent:self.view.layer.bounds];
+    [self addTipsLabel];
+    [self addButtons];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,6 +46,39 @@
         [self.view addSubview:_scannerView];
     }
     return _scannerView;
+}
+
+- (void)addTipsLabel {
+    self.tipsLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.scannerView.frame), self.scannerView.minYUnderScannerRegion + 20, self.scannerView.frame.size.width, 20)];
+    self.tipsLabel.textAlignment = NSTextAlignmentCenter;
+    self.tipsLabel.textColor = [UIColor whiteColor];
+    self.tipsLabel.text =  @"请将二维码放置于上框中";
+    [self.view addSubview:self.tipsLabel];
+}
+
+- (void)addButtons {
+    CGFloat minYUnderTipsLabel = CGRectGetMaxY(self.tipsLabel.frame);
+    CGFloat maxHeight = self.view.bounds.size.height;
+    CGFloat height = maxHeight - minYUnderTipsLabel - maxHeight * kPaddingAspect - 20;
+    CGFloat width = (CGRectGetWidth(self.scannerView.frame) * kClearRectAspect - 10) / 2;
+    CGFloat buttonWidthAndHeight = MIN(height, width);
+    // 添加闪光灯按钮
+    self.flashLight = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.flashLight.layer.cornerRadius = 10;
+    self.flashLight.clipsToBounds = YES;
+    self.flashLight.frame = CGRectMake(CGRectGetWidth(self.scannerView.frame) * kPaddingAspect, minYUnderTipsLabel + 20, buttonWidthAndHeight, buttonWidthAndHeight);
+    [self.flashLight setImage:[UIImage imageNamed:@"flash_on"] forState:UIControlStateNormal];
+    [self.flashLight setBackgroundColor:[UIColor colorWithWhite:0.902 alpha:0.880]];
+    [self.view addSubview:self.flashLight];
+    // 添加读取图片库按钮
+    self.loadPic = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.loadPic.layer.cornerRadius = 10;
+    self.loadPic.clipsToBounds = YES;
+    self.loadPic.frame = CGRectMake(CGRectGetMaxX(self.flashLight.frame) + 10, minYUnderTipsLabel + 20, buttonWidthAndHeight, buttonWidthAndHeight);
+    [self.loadPic setImage:[UIImage imageNamed:@"album"] forState:UIControlStateNormal];
+    [self.loadPic setBackgroundColor:[UIColor colorWithWhite:0.902 alpha:0.880]];
+    [self.view addSubview:self.loadPic];
+    
 }
 
 # pragma mark - Running Control
@@ -70,9 +110,7 @@
     self.capturePreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
     [self.capturePreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     self.capturePreviewLayer.frame = CGRectMake(0, 0, rect.size.width, rect.size.height);
-    // TODO
     [self.view.layer insertSublayer:self.capturePreviewLayer atIndex:0];
-    //    [self.superview.layer addSublayer:self.capturePreviewLayer];
     self.captureMeradataOutput.rectOfInterest = CGRectMake(kPaddingAspect, kPaddingAspect, kClearRectAspect * self.capturePreviewLayer.bounds.size.width / self.capturePreviewLayer.bounds.size.height , kClearRectAspect);
 }
 
