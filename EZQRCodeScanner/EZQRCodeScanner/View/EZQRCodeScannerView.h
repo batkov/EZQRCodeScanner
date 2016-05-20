@@ -28,4 +28,7 @@ typedef NS_ENUM(NSUInteger, EZScanStyle) {
 - (void)startAnimation;   // 控制QRCodeScanner开始扫描，同时启动定时器NSTimer实现动画效果
 - (void)stopAnimation;    // 为了不让NSTimer处于工作状态，可手动停止二维码扫描
 
+- (CGFloat)minYUnderScannerRegion;
+- (CGFloat)minXNearScannerRegion;
+
 @end
