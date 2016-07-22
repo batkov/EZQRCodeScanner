@@ -10,7 +10,7 @@
 #import "EZQRCodeScanner.h"
 #import "EZQRCodeScannerView.h"
 
-@interface EZQRCodeScanner () <AVCaptureMetadataOutputObjectsDelegate>
+@interface EZQRCodeScanner () <AVCaptureMetadataOutputObjectsDelegate, UIImagePickerControllerDelegate>
 @property (strong, nonatomic) AVCaptureSession *captureSession;
 @property (strong, nonatomic) AVCaptureVideoPreviewLayer *capturePreviewLayer;
 @property (strong, nonatomic) AVCaptureDevice *captureDevice;
@@ -22,15 +22,17 @@
 @property (strong, nonatomic) UIButton *flashLight;
 @property (strong, nonatomic) UIButton *loadPic;
 
+@property (nonatomic, getter=isTorchOn) BOOL torchOn;
+
 @end
 
 @implementation EZQRCodeScanner
 # pragma mark - Initial
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
     [self setupAVCaptureComponent:self.view.layer.bounds];
+    [self.view addSubview:self.scannerView];
     [self addTipsLabel];
     [self addButtons];
 }
@@ -43,7 +45,6 @@
 - (EZQRCodeScannerView *)scannerView {
     if (!_scannerView) {
         _scannerView = [[EZQRCodeScannerView alloc] initWithFrame:self.view.frame];
-        [self.view addSubview:_scannerView];
     }
     return _scannerView;
 }
@@ -58,23 +59,24 @@
 
 - (void)addButtons {
     CGFloat minYUnderTipsLabel = CGRectGetMaxY(self.tipsLabel.frame);
-    CGFloat maxHeight = self.view.bounds.size.height;
-    CGFloat height = maxHeight - minYUnderTipsLabel - maxHeight * kPaddingAspect - 20;
-    CGFloat width = (CGRectGetWidth(self.scannerView.frame) * kClearRectAspect - 10) / 2;
-    CGFloat buttonWidthAndHeight = MIN(height, width);
+    CGFloat buttonWidthAndHeight = CGRectGetWidth(self.view.bounds) / 5;
+    
     // 添加闪光灯按钮
-    self.flashLight = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.flashLight = [UIButton buttonWithType:UIButtonTypeCustom];
     self.flashLight.layer.cornerRadius = 10;
     self.flashLight.clipsToBounds = YES;
-    self.flashLight.frame = CGRectMake(CGRectGetWidth(self.scannerView.frame) * kPaddingAspect, minYUnderTipsLabel + 20, buttonWidthAndHeight, buttonWidthAndHeight);
+    self.flashLight.frame = CGRectMake(buttonWidthAndHeight, minYUnderTipsLabel + 20, buttonWidthAndHeight, buttonWidthAndHeight);
+    self.torchOn = NO;
     [self.flashLight setImage:[UIImage imageNamed:@"flash_on"] forState:UIControlStateNormal];
+    [self.flashLight addTarget:self action:@selector(openTorch:) forControlEvents:UIControlEventTouchUpInside];
     [self.flashLight setBackgroundColor:[UIColor colorWithWhite:0.902 alpha:0.880]];
     [self.view addSubview:self.flashLight];
     // 添加读取图片库按钮
     self.loadPic = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.loadPic.layer.cornerRadius = 10;
     self.loadPic.clipsToBounds = YES;
-    self.loadPic.frame = CGRectMake(CGRectGetMaxX(self.flashLight.frame) + 10, minYUnderTipsLabel + 20, buttonWidthAndHeight, buttonWidthAndHeight);
+    self.loadPic.frame = CGRectMake(CGRectGetMaxX(self.flashLight.frame) + buttonWidthAndHeight, minYUnderTipsLabel + 20, buttonWidthAndHeight, buttonWidthAndHeight);
+    [self.loadPic addTarget:self action:@selector(openAlbum:) forControlEvents:UIControlEventTouchUpInside];
     [self.loadPic setImage:[UIImage imageNamed:@"album"] forState:UIControlStateNormal];
     [self.loadPic setBackgroundColor:[UIColor colorWithWhite:0.902 alpha:0.880]];
     [self.view addSubview:self.loadPic];
@@ -89,6 +91,28 @@
 - (void)stopRunning {
     [self.scannerView stopAnimation];
     [self.captureSession stopRunning];
+}
+
+# pragma mark - ButtonEvent
+- (void)openTorch:(UIButton *)button {
+    self.torchOn = !self.isTorchOn;
+    [self.captureDevice lockForConfiguration:nil];
+    if (self.isTorchOn) {
+        [self.captureDevice setTorchMode:AVCaptureTorchModeOn];
+        [self.flashLight setImage:[UIImage imageNamed:@"flash_off"] forState:UIControlStateNormal];
+    } else {
+        [self.captureDevice setTorchMode:AVCaptureTorchModeOff];
+        [self.flashLight setImage:[UIImage imageNamed:@"flash_on"] forState:UIControlStateNormal];
+    }
+    [self.captureDevice unlockForConfiguration];
+}
+- (void)openAlbum:(UIButton *)button {
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.delegate = self;
+    imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }
 }
 
 # pragma mark - Setup AVCapture Things
@@ -111,7 +135,7 @@
     [self.capturePreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     self.capturePreviewLayer.frame = CGRectMake(0, 0, rect.size.width, rect.size.height);
     [self.view.layer insertSublayer:self.capturePreviewLayer atIndex:0];
-    self.captureMeradataOutput.rectOfInterest = CGRectMake(kPaddingAspect, kPaddingAspect, kClearRectAspect * self.capturePreviewLayer.bounds.size.width / self.capturePreviewLayer.bounds.size.height , kClearRectAspect);
+    self.captureMeradataOutput.rectOfInterest = CGRectMake(kHeightPaddingAspect, kWidthPaddingAspect, kClearRectAspect * self.capturePreviewLayer.bounds.size.width / self.capturePreviewLayer.bounds.size.height , kClearRectAspect);
 }
 
 # pragma mark - AVCaptureMetadataOutputObjectsDelegate
@@ -139,5 +163,15 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
         }
     }
 }
+
+# pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+}
+
 
 @end

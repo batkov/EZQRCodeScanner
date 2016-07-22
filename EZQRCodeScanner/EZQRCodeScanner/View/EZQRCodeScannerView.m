@@ -38,8 +38,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        self.scanRegionFrame = CGRectMake(self.frame.size.width * kPaddingAspect,
-                                    self.frame.size.height * kPaddingAspect,
+        self.scanRegionFrame = CGRectMake(self.frame.size.width * kWidthPaddingAspect,
+                                    self.frame.size.height * kHeightPaddingAspect,
                                     self.frame.size.width * kClearRectAspect,
                                     self.frame.size.width * kClearRectAspect);
         self.scanStyle = EZScanStyleNetGrid;

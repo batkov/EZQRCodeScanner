@@ -19,8 +19,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     EZQRCodeScanner *scanner = [[EZQRCodeScanner alloc] init];
-    [scanner startRunning];
     [self.navigationController pushViewController:scanner animated:YES];
+    [scanner startRunning];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
