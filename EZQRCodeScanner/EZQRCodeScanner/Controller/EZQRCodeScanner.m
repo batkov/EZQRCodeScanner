@@ -31,6 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = @"扫描二维码";
     [self setupAVCaptureComponent:self.view.layer.bounds];
     [self.view addSubview:self.scannerView];
     [self addTipsLabel];
@@ -72,22 +73,22 @@
 }
 
 - (void)addTipsLabel {
-    self.tipsLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.scannerView.frame), self.scannerView.minYUnderScannerRegion + 20, self.scannerView.frame.size.width, 20)];
+    self.tipsLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(self.scannerView.frame), CGRectGetMaxY(self.scannerView.frame) * kHeightPaddingAspect - 40, self.scannerView.frame.size.width, 20)];
     self.tipsLabel.textAlignment = NSTextAlignmentCenter;
     self.tipsLabel.textColor = [UIColor whiteColor];
-    self.tipsLabel.text =  @"请将二维码放置于上框中";
+    self.tipsLabel.text =  @"请将二维码放置于下框中";
     [self.view addSubview:self.tipsLabel];
 }
 
 - (void)addButtons {
-    CGFloat minYUnderTipsLabel = CGRectGetMaxY(self.tipsLabel.frame);
+    CGFloat minYUnderScannerRegion = self.scannerView.minYUnderScannerRegion;
     CGFloat buttonWidthAndHeight = CGRectGetWidth(self.view.bounds) / 5;
     
     // 添加闪光灯按钮
     self.flashLight = [UIButton buttonWithType:UIButtonTypeCustom];
     self.flashLight.layer.cornerRadius = 10;
     self.flashLight.clipsToBounds = YES;
-    self.flashLight.frame = CGRectMake(buttonWidthAndHeight, minYUnderTipsLabel + 20, buttonWidthAndHeight, buttonWidthAndHeight);
+    self.flashLight.frame = CGRectMake(buttonWidthAndHeight, minYUnderScannerRegion + 30, buttonWidthAndHeight, buttonWidthAndHeight);
     self.torchOn = NO;
     [self.flashLight setImage:[UIImage imageNamed:@"flash_on"] forState:UIControlStateNormal];
     [self.flashLight addTarget:self action:@selector(openTorch:) forControlEvents:UIControlEventTouchUpInside];
@@ -97,7 +98,7 @@
     self.loadPic = [UIButton buttonWithType:UIButtonTypeCustom];
     self.loadPic.layer.cornerRadius = 10;
     self.loadPic.clipsToBounds = YES;
-    self.loadPic.frame = CGRectMake(CGRectGetMaxX(self.flashLight.frame) + buttonWidthAndHeight, minYUnderTipsLabel + 20, buttonWidthAndHeight, buttonWidthAndHeight);
+    self.loadPic.frame = CGRectMake(CGRectGetMaxX(self.flashLight.frame) + buttonWidthAndHeight, minYUnderScannerRegion + 30, buttonWidthAndHeight, buttonWidthAndHeight);
     [self.loadPic setImage:[UIImage imageNamed:@"album"] forState:UIControlStateNormal];
     [self.loadPic addTarget:self action:@selector(openAlbum:) forControlEvents:UIControlEventTouchUpInside];
     [self.loadPic setBackgroundColor:[UIColor colorWithWhite:0.902 alpha:0.880]];
