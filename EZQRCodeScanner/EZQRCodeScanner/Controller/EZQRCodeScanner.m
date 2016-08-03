@@ -23,7 +23,7 @@
 @property (strong, nonatomic) UIButton *loadPic;
 
 @property (nonatomic, getter=isTorchOn) BOOL torchOn;
-
+@property (nonatomic, strong) UIImagePickerController *imagePicker;
 @end
 
 @implementation EZQRCodeScanner
@@ -40,6 +40,16 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self startRunning];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self stopRunning];
 }
 
 - (EZQRCodeScannerView *)scannerView {
@@ -76,8 +86,8 @@
     self.loadPic.layer.cornerRadius = 10;
     self.loadPic.clipsToBounds = YES;
     self.loadPic.frame = CGRectMake(CGRectGetMaxX(self.flashLight.frame) + buttonWidthAndHeight, minYUnderTipsLabel + 20, buttonWidthAndHeight, buttonWidthAndHeight);
-    [self.loadPic addTarget:self action:@selector(openAlbum:) forControlEvents:UIControlEventTouchUpInside];
     [self.loadPic setImage:[UIImage imageNamed:@"album"] forState:UIControlStateNormal];
+    [self.loadPic addTarget:self action:@selector(openAlbum:) forControlEvents:UIControlEventTouchUpInside];
     [self.loadPic setBackgroundColor:[UIColor colorWithWhite:0.902 alpha:0.880]];
     [self.view addSubview:self.loadPic];
     
@@ -107,11 +117,11 @@
     [self.captureDevice unlockForConfiguration];
 }
 - (void)openAlbum:(UIButton *)button {
-    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-    imagePicker.delegate = self;
-    imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    self.imagePicker = [[UIImagePickerController alloc] init];
+    self.imagePicker.delegate = self;
+    self.imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
-        [self presentViewController:imagePicker animated:YES completion:nil];
+        [self presentViewController:self.imagePicker animated:YES completion:nil];
     }
 }
 
@@ -166,11 +176,22 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
 
 # pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    
+    // 5S等架构为ARM64可用
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    CIImage *ciImage = [CIImage imageWithCGImage:[image CGImage]];
+    CIContext *context = [CIContext contextWithOptions:nil];
+    NSDictionary *detectorOptions = [NSDictionary dictionaryWithObject:CIDetectorAccuracyHigh forKey:CIDetectorAccuracy];
+    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:context options:detectorOptions];
+    NSArray *features = [detector featuresInImage:ciImage];
+    NSString *msg = ((CIQRCodeFeature *)[features firstObject]).messageString;
+    if ([self.delegate respondsToSelector:@selector(scannerView:outputString:)]) {
+        [self.delegate scannerView:self outputString:msg];
+    };
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
