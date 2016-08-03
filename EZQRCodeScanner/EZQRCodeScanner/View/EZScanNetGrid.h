@@ -12,6 +12,8 @@
 
 @property (weak, nonatomic) UIView *showView;
 
+@property (nonatomic) BOOL animationBegin;
+
 - (void)startAnimation;
 
 @end

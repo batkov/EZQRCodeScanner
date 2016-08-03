@@ -111,7 +111,9 @@
             break;
         case EZScanStyleNetGrid:
         {
-            [self.netGrid startAnimation];
+            if (!self.netGrid.animationBegin) {
+                [self.netGrid startAnimation];
+            }
         }
             break;
         default:

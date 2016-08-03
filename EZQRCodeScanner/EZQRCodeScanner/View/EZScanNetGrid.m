@@ -20,6 +20,7 @@
     frame.origin.y = -frame.size.height;
     self.initFrame = frame;
     self.frame = frame;
+    self.animationBegin = NO;
 }
 
 - (void)startAnimation {
@@ -31,5 +32,7 @@
         self.frame = self.initFrame;
         [self startAnimation];
     }];
+    self.animationBegin = YES;
 }
+
 @end

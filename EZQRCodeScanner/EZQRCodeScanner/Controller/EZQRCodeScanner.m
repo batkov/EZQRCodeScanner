@@ -8,9 +8,8 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import "EZQRCodeScanner.h"
-#import "EZQRCodeScannerView.h"
 
-@interface EZQRCodeScanner () <AVCaptureMetadataOutputObjectsDelegate, UIImagePickerControllerDelegate>
+@interface EZQRCodeScanner () <AVCaptureMetadataOutputObjectsDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (strong, nonatomic) AVCaptureSession *captureSession;
 @property (strong, nonatomic) AVCaptureVideoPreviewLayer *capturePreviewLayer;
 @property (strong, nonatomic) AVCaptureDevice *captureDevice;
@@ -27,6 +26,7 @@
 @end
 
 @implementation EZQRCodeScanner
+
 # pragma mark - Initial
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,7 +43,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+    [super viewWillAppear:animated];
     [self startRunning];
 }
 
@@ -57,6 +57,18 @@
         _scannerView = [[EZQRCodeScannerView alloc] initWithFrame:self.view.frame];
     }
     return _scannerView;
+}
+
+- (UIImagePickerController *)imagePicker {
+    if (!_imagePicker) {
+        _imagePicker = [[UIImagePickerController alloc] init];
+        _imagePicker.delegate = self;
+        _imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        _imagePicker.allowsEditing = YES;
+    }
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+        return _imagePicker;
+    } else return nil;
 }
 
 - (void)addTipsLabel {
@@ -82,7 +94,7 @@
     [self.flashLight setBackgroundColor:[UIColor colorWithWhite:0.902 alpha:0.880]];
     [self.view addSubview:self.flashLight];
     // 添加读取图片库按钮
-    self.loadPic = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.loadPic = [UIButton buttonWithType:UIButtonTypeCustom];
     self.loadPic.layer.cornerRadius = 10;
     self.loadPic.clipsToBounds = YES;
     self.loadPic.frame = CGRectMake(CGRectGetMaxX(self.flashLight.frame) + buttonWidthAndHeight, minYUnderTipsLabel + 20, buttonWidthAndHeight, buttonWidthAndHeight);
@@ -117,12 +129,7 @@
     [self.captureDevice unlockForConfiguration];
 }
 - (void)openAlbum:(UIButton *)button {
-    self.imagePicker = [[UIImagePickerController alloc] init];
-    self.imagePicker.delegate = self;
-    self.imagePicker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
-        [self presentViewController:self.imagePicker animated:YES completion:nil];
-    }
+    [self presentViewController:self.imagePicker animated:YES completion:nil];
 }
 
 # pragma mark - Setup AVCapture Things
@@ -176,6 +183,8 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
 
 # pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    [self.captureSession stopRunning];
+    [self dismissViewControllerAnimated:YES completion:nil];
     // 5S等架构为ARM64可用
     UIImage *image = info[UIImagePickerControllerOriginalImage];
     CIImage *ciImage = [CIImage imageWithCGImage:[image CGImage]];
@@ -187,7 +196,7 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
     if ([self.delegate respondsToSelector:@selector(scannerView:outputString:)]) {
         [self.delegate scannerView:self outputString:msg];
     };
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

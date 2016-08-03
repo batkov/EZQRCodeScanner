@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EZQRCodeScannerView.h"
 
 @class EZQRCodeScanner;
 @protocol EZQRCodeScannerDelegate <NSObject>
@@ -21,8 +22,6 @@
 @interface EZQRCodeScanner : UIViewController
 
 @property (weak, nonatomic) id<EZQRCodeScannerDelegate> delegate;
-
-- (void)startRunning;   // 控制QRCodeScanner开始扫描，同时启动定时器NSTimer实现动画效果
-- (void)stopRunning;    // 为了不让NSTimer处于工作状态，可手动停止二维码扫描
+@property (nonatomic) EZScanStyle scanStyle;
 
 @end
