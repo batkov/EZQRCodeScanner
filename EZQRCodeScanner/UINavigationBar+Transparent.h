@@ -10,4 +10,8 @@
 
 @interface UINavigationBar (Transparent)
 
+- (void)setBackgroundColorByMyself:(UIColor * __nullable)backgroundColor;
+- (void)setBackgroundColorByMyself2:(UIColor * __nullable)backgroundColor;
+
+- (void)reset;
 @end

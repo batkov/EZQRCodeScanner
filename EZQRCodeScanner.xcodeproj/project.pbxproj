@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C02E789D1D51C17100FDA4B3 /* UINavigationBar+Transparent.m in Sources */ = {isa = PBXBuildFile; fileRef = C02E789C1D51C17100FDA4B3 /* UINavigationBar+Transparent.m */; };
 		C04B1ED51CED64A6008085A2 /* scan_net@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C04B1ED41CED64A6008085A2 /* scan_net@2x.png */; settings = {ASSET_TAGS = (); }; };
 		C0B1137B1CEC5611004A2479 /* EZQRCodeScannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B1137A1CEC5611004A2479 /* EZQRCodeScannerView.m */; settings = {ASSET_TAGS = (); }; };
 		C0B1137E1CEC566B004A2479 /* EZQRCodeScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B1137D1CEC566B004A2479 /* EZQRCodeScanner.m */; settings = {ASSET_TAGS = (); }; };
@@ -25,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C02E789B1D51C17100FDA4B3 /* UINavigationBar+Transparent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationBar+Transparent.h"; path = "EZQRCodeScanner/UINavigationBar+Transparent.h"; sourceTree = SOURCE_ROOT; };
+		C02E789C1D51C17100FDA4B3 /* UINavigationBar+Transparent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationBar+Transparent.m"; path = "EZQRCodeScanner/UINavigationBar+Transparent.m"; sourceTree = SOURCE_ROOT; };
 		C04B1ED41CED64A6008085A2 /* scan_net@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scan_net@2x.png"; sourceTree = "<group>"; };
 		C0B113791CEC5611004A2479 /* EZQRCodeScannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EZQRCodeScannerView.h; sourceTree = "<group>"; };
 		C0B1137A1CEC5611004A2479 /* EZQRCodeScannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EZQRCodeScannerView.m; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 				C0F25AF31CE9AC5B002705CF /* Assets.xcassets */,
 				C0F25AF51CE9AC5B002705CF /* LaunchScreen.storyboard */,
 				C0F25AF81CE9AC5B002705CF /* Info.plist */,
+				C02E789B1D51C17100FDA4B3 /* UINavigationBar+Transparent.h */,
+				C02E789C1D51C17100FDA4B3 /* UINavigationBar+Transparent.m */,
 				C0F25AFE1CE9B600002705CF /* EZQRCodeScanner */,
 				C0F25AE71CE9AC5B002705CF /* Supporting Files */,
 			);
@@ -225,6 +230,7 @@
 			files = (
 				C0F25AEF1CE9AC5B002705CF /* ViewController.m in Sources */,
 				C0F25AEC1CE9AC5B002705CF /* AppDelegate.m in Sources */,
+				C02E789D1D51C17100FDA4B3 /* UINavigationBar+Transparent.m in Sources */,
 				C0C77BCC1CEEBB2400760432 /* EZScanNetGrid.m in Sources */,
 				C0B1137B1CEC5611004A2479 /* EZQRCodeScannerView.m in Sources */,
 				C0C77BCF1CEEBFE400760432 /* EZScanCycle.m in Sources */,
