@@ -8,7 +8,8 @@
 > Why I make this QRCode Scanner is that I want to simplify the same work I usually do. The next time I need the QRCode Scanner, I can use it immediately.    
 
 Actually, I want to create three mode of the animation to show in the scanner view. But I have some problems in the last mode. So the version 1.0.0 only has the mode "line" and mode "netgrid". I will create the third mode as soon as possible.    
-
+![](NetGrid.png) ![](Line.png)    
+The flash button can turn the flash light on or off, and the album button can open the album of your device for you to choose a QRCode picture to be analysed(Only support iPhone5S and later thanks to the arm64).    
     
 ## How To Get Started
 
@@ -51,14 +52,19 @@ But I still show you how to install with Cocoapods.
     ```
     scanner.delegate = self;
     ```
+3. Set the animation mode of the scan region. You can choose the mode "Line"(consume CPU strongly) or "NetGrid". 
 
-3. Show the EZQRCodeScanner;
+	```
+	scanner.scanStyle = EZScanStyleLine;
+	```
+
+4. Show the EZQRCodeScanner;
 
     ```
     [self.navigationController pushViewController:scanner animated:YES];
     ```
     
-4. You can see the demo for detail.Enjoy. :) 
+5. You can see the demo for detail.Enjoy. :) 
 
 
 #### EZQRCodeScannerDelegate
