@@ -44,6 +44,7 @@
 - (IBAction)scanQRCode:(id)sender {
     EZQRCodeScanner *scanner = [[EZQRCodeScanner alloc] init];
     scanner.delegate = self;
+    scanner.scanStyle = EZScanStyleLine;
     [self.navigationController pushViewController:scanner animated:YES];
 }
 
