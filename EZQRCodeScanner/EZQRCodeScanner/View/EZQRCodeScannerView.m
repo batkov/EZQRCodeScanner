@@ -42,8 +42,6 @@
                                     self.frame.size.height * kHeightPaddingAspect,
                                     self.frame.size.width * kClearRectAspect,
                                     self.frame.size.width * kClearRectAspect);
-        self.scanStyle = EZScanStyleNetGrid;
-//        self.scanStyle = EZScanStyleLine;
     }
     return self;
 }

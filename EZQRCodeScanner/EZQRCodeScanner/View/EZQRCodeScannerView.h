@@ -13,6 +13,7 @@
 #define kClearRectAspect .70            //中间透明部分的宽高占整个View的比例
 
 typedef NS_ENUM(NSUInteger, EZScanStyle) {
+    EZScanStyleNone,
     EZScanStyleLine,
     EZScanStyleNetGrid,
     EZScanStyleCycle,

@@ -27,6 +27,8 @@
 
 @implementation EZQRCodeScanner
 
+@synthesize scanStyle = _scanStyle;
+
 # pragma mark - Initial
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,9 +55,21 @@
     [self stopRunning];
 }
 
+- (void)setScanStyle:(EZScanStyle)otherScanStyle {
+    _scanStyle = otherScanStyle;
+}
+
+- (EZScanStyle)scanStyle {
+    if (_scanStyle == EZScanStyleNone) {
+        _scanStyle = EZScanStyleNetGrid;
+    }
+    return _scanStyle;
+}
+
 - (EZQRCodeScannerView *)scannerView {
     if (!_scannerView) {
         _scannerView = [[EZQRCodeScannerView alloc] initWithFrame:self.view.frame];
+        _scannerView.scanStyle = self.scanStyle;
     }
     return _scannerView;
 }
