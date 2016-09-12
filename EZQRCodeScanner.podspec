@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "EZQRCodeScanner"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "二维码扫描"
 
   # This description is used to generate tags and improve search results.

@@ -15,19 +15,19 @@ The flash button can turn the flash light on or off, and the album button can op
 
 ### Installation
 
-You can install EZQRCodeScanner in a traditional way -- drag the **EZQRCodeScanner/EZQRCodeScanner** into your project.<font color=red>(recommended)</font>         
-你可以直接将 **EZQRCodeScanner/EZQRCodeScanner**文件夹加入到项目中直接使用。
+You can install EZQRCodeScanner in a traditional way -- drag the **EZQRCodeScanner/EZQRCodeScanner** into your project.<font color=red size=6>(recommended)</font>         
+将 **EZQRCodeScanner/EZQRCodeScanner**文件夹加入到项目中直接使用。
 
 ### Install with CocoaPods
 
-CocoaPods is a dependency manager for Objective-C and Swift, which automates and simplifies the process of using 3rd-party libraries like EZHeartForLike in your projects.    
-However, it is strongly recommended that you <font color=red>do not</font> install via CocoaPods in this situation, because this pod includes a view controller and we all know usually we have to do some individual work in the controller, so the better way to install this pod is to use the way up there.    
+CocoaPods is a dependency manager for Objective-C and Swift, which automates and simplifies the process of using 3rd-party libraries like EZQRCodeScanner in your projects.    
+However, it is strongly recommended that you <font color=red size=6>do not</font> install via CocoaPods in this situation, because this pod includes a view controller and we all know usually we have to do some individual work in the controller, so the better way to install this pod is to use the way up there.    
 But I still show you how to install with Cocoapods.
 
 * Podfile
 
 	```           
-	pod 'EZQRCodeScanner', '~> 1.0.0'
+	pod 'EZQRCodeScanner', '~> 1.0.1'
 	```
 	
 
@@ -55,16 +55,22 @@ But I still show you how to install with Cocoapods.
 3. Set the animation mode of the scan region. You can choose the mode "Line"(consume CPU strongly) or "NetGrid". 
 
 	```
-	scanner.scanStyle = EZScanStyleLine;
+	scanner.scanStyle = EZScanStyleNetGrid;
 	```
 
-4. Show the EZQRCodeScanner;
+4. Set the showButton of the scanner.If you wanna show the flashlight and the album button under the scanner region, put it YES. 
+
+	```
+	scanner.showButton = YES;
+	```
+
+5. Show the EZQRCodeScanner;
 
     ```
     [self.navigationController pushViewController:scanner animated:YES];
     ```
     
-5. You can see the demo for detail.Enjoy. :) 
+6. You can see the demo for detail.Enjoy. :) 
 
 
 #### EZQRCodeScannerDelegate
@@ -74,7 +80,7 @@ But I still show you how to install with Cocoapods.
     
     ```
     - (void)scannerView:(EZQRCodeScanner *)scanner outputString:(NSString *)output {    
-        // do something to the output
+        // do something to the output and pop the scanner from the navigationController if you use push before.
     }
     ```
 
@@ -89,6 +95,7 @@ But I still show you how to install with Cocoapods.
 ## update
 
 		1.0.0     初始化版本，包含两种扫描动画。
+		1.0.1	  添加是否显示图库和闪光灯开关
 
 ## Issues, Bugs, Suggestions
 
