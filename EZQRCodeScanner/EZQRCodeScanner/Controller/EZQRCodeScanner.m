@@ -37,7 +37,7 @@
     [self setupAVCaptureComponent:self.view.layer.bounds];
     [self.view addSubview:self.scannerView];
     [self addTipsLabel];
-    [self addButtons];
+    if (self.showButton) [self addButtons];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -182,16 +182,22 @@ didOutputMetadataObjects:(NSArray *)metadataObjects
         if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
             // TODO
             if ([weakSelf.delegate respondsToSelector:@selector(scannerView:outputString:)]) {
-                [weakSelf.delegate scannerView:weakSelf outputString:[metadataObj stringValue]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.delegate scannerView:weakSelf outputString:[metadataObj stringValue]];
+                });
             };
         } else {
             if ([weakSelf.delegate respondsToSelector:@selector(scannerView:errorMessage:)]) {
-                [weakSelf.delegate scannerView:weakSelf errorMessage:@"Can not match the type:AVMetadataObjectTypeQRCode"];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.delegate scannerView:weakSelf errorMessage:@"Can not match the type:AVMetadataObjectTypeQRCode"];
+                });
             }
         }
     } else {
         if ([weakSelf.delegate respondsToSelector:@selector(scannerView:errorMessage:)]) {
-            [weakSelf.delegate scannerView:weakSelf errorMessage:@"Can not get the message"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.delegate scannerView:weakSelf errorMessage:@"Can not get the message"];
+            });
         }
     }
 }
