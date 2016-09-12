@@ -44,7 +44,8 @@
 - (IBAction)scanQRCode:(id)sender {
     EZQRCodeScanner *scanner = [[EZQRCodeScanner alloc] init];
     scanner.delegate = self;
-    scanner.scanStyle = EZScanStyleLine;
+    scanner.scanStyle = EZScanStyleNetGrid;
+    scanner.showButton = NO;
     [self.navigationController pushViewController:scanner animated:YES];
 }
 
@@ -52,7 +53,11 @@
     
 }
 - (void)scannerView:(EZQRCodeScanner *)scanner outputString:(NSString *)output {
-    NSLog(@"%@",output);
+    [self.navigationController popViewControllerAnimated:YES];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"扫描结果" message:output preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:alertAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 @end
