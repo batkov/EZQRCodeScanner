@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+// 需要修改扫描区域的大小请修改kClearRectAspect所占的比例，但以下等式必须满足：kClearRectAspect + kWidthPaddingAspect * 2 = 1
 #define kWidthPaddingAspect .15         //中间透明部分与两端间隔占整个View的比例
 #define kHeightPaddingAspect .25        //中间透明部分与上方的间隔占整个View的比例
 #define kClearRectAspect .70            //中间透明部分的宽高占整个View的比例
@@ -15,8 +16,7 @@
 typedef NS_ENUM(NSUInteger, EZScanStyle) {
     EZScanStyleNone,
     EZScanStyleLine,
-    EZScanStyleNetGrid,
-    EZScanStyleCycle,
+    EZScanStyleNetGrid
 };
 
 @class EZQRCodeScannerView;

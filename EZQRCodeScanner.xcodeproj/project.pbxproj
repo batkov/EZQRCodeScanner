@@ -8,15 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		C02E789D1D51C17100FDA4B3 /* UINavigationBar+Transparent.m in Sources */ = {isa = PBXBuildFile; fileRef = C02E789C1D51C17100FDA4B3 /* UINavigationBar+Transparent.m */; };
-		C04B1ED51CED64A6008085A2 /* scan_net@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C04B1ED41CED64A6008085A2 /* scan_net@2x.png */; settings = {ASSET_TAGS = (); }; };
-		C0B1137B1CEC5611004A2479 /* EZQRCodeScannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B1137A1CEC5611004A2479 /* EZQRCodeScannerView.m */; settings = {ASSET_TAGS = (); }; };
-		C0B1137E1CEC566B004A2479 /* EZQRCodeScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B1137D1CEC566B004A2479 /* EZQRCodeScanner.m */; settings = {ASSET_TAGS = (); }; };
+		C04B1ED51CED64A6008085A2 /* scan_net@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C04B1ED41CED64A6008085A2 /* scan_net@2x.png */; };
+		C0B1137B1CEC5611004A2479 /* EZQRCodeScannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B1137A1CEC5611004A2479 /* EZQRCodeScannerView.m */; };
+		C0B1137E1CEC566B004A2479 /* EZQRCodeScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B1137D1CEC566B004A2479 /* EZQRCodeScanner.m */; };
 		C0BAE9F61D5199370036E497 /* album@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0BAE9F51D5199370036E497 /* album@2x.png */; };
 		C0BAE9FE1D519A990036E497 /* flash_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0BAE9FD1D519A990036E497 /* flash_on@2x.png */; };
 		C0BAEA001D519A9E0036E497 /* flash_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C0BAE9FF1D519A9E0036E497 /* flash_off@2x.png */; };
-		C0C77BC91CEEB44C00760432 /* EZScanLine.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C77BC81CEEB44C00760432 /* EZScanLine.m */; settings = {ASSET_TAGS = (); }; };
-		C0C77BCC1CEEBB2400760432 /* EZScanNetGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C77BCB1CEEBB2400760432 /* EZScanNetGrid.m */; settings = {ASSET_TAGS = (); }; };
-		C0C77BCF1CEEBFE400760432 /* EZScanCycle.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C77BCE1CEEBFE400760432 /* EZScanCycle.m */; settings = {ASSET_TAGS = (); }; };
+		C0C77BC91CEEB44C00760432 /* EZScanLine.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C77BC81CEEB44C00760432 /* EZScanLine.m */; };
+		C0C77BCC1CEEBB2400760432 /* EZScanNetGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = C0C77BCB1CEEBB2400760432 /* EZScanNetGrid.m */; };
 		C0F25AE91CE9AC5B002705CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F25AE81CE9AC5B002705CF /* main.m */; };
 		C0F25AEC1CE9AC5B002705CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F25AEB1CE9AC5B002705CF /* AppDelegate.m */; };
 		C0F25AEF1CE9AC5B002705CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F25AEE1CE9AC5B002705CF /* ViewController.m */; };
@@ -40,8 +39,6 @@
 		C0C77BC81CEEB44C00760432 /* EZScanLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EZScanLine.m; sourceTree = "<group>"; };
 		C0C77BCA1CEEBB2400760432 /* EZScanNetGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EZScanNetGrid.h; sourceTree = "<group>"; };
 		C0C77BCB1CEEBB2400760432 /* EZScanNetGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EZScanNetGrid.m; sourceTree = "<group>"; };
-		C0C77BCD1CEEBFE400760432 /* EZScanCycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EZScanCycle.h; sourceTree = "<group>"; };
-		C0C77BCE1CEEBFE400760432 /* EZScanCycle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EZScanCycle.m; sourceTree = "<group>"; };
 		C0F25AE41CE9AC5B002705CF /* EZQRCodeScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EZQRCodeScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0F25AE81CE9AC5B002705CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C0F25AEA1CE9AC5B002705CF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -94,8 +91,6 @@
 				C0C77BCB1CEEBB2400760432 /* EZScanNetGrid.m */,
 				C0C77BC71CEEB44C00760432 /* EZScanLine.h */,
 				C0C77BC81CEEB44C00760432 /* EZScanLine.m */,
-				C0C77BCD1CEEBFE400760432 /* EZScanCycle.h */,
-				C0C77BCE1CEEBFE400760432 /* EZScanCycle.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -233,7 +228,6 @@
 				C02E789D1D51C17100FDA4B3 /* UINavigationBar+Transparent.m in Sources */,
 				C0C77BCC1CEEBB2400760432 /* EZScanNetGrid.m in Sources */,
 				C0B1137B1CEC5611004A2479 /* EZQRCodeScannerView.m in Sources */,
-				C0C77BCF1CEEBFE400760432 /* EZScanCycle.m in Sources */,
 				C0F25AE91CE9AC5B002705CF /* main.m in Sources */,
 				C0B1137E1CEC566B004A2479 /* EZQRCodeScanner.m in Sources */,
 				C0C77BC91CEEB44C00760432 /* EZScanLine.m in Sources */,

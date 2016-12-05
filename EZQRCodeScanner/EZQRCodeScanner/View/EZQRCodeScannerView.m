@@ -9,7 +9,6 @@
 #import "EZQRCodeScannerView.h"
 #import "EZScanLine.h"
 #import "EZScanNetGrid.h"
-#import "EZScanCycle.h"
 
 #define CornerLineWidth 4
 
@@ -23,8 +22,6 @@
 @property (strong, nonatomic) EZScanLine *scanLine;
 // ScanNetGrid
 @property (strong, nonatomic) EZScanNetGrid *netGrid;
-// ScanCycle
-@property (strong, nonatomic) EZScanCycle *cycle;
 
 @end
 
@@ -83,12 +80,6 @@
             [self.showView addSubview:self.scanLine];
         }
             break;
-        case EZScanStyleCycle:
-        {
-            self.cycle = [[EZScanCycle alloc] initWithFrame:self.showView.bounds];
-            [self.showView addSubview:self.cycle];
-        }
-            break;
         default:
             break;
     }
@@ -100,11 +91,6 @@
         case EZScanStyleLine:
         {
             self.timer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self.scanLine selector:@selector(startAnimation) userInfo:nil repeats:YES];
-        }
-            break;
-        case EZScanStyleCycle:
-        {
-            
         }
             break;
         case EZScanStyleNetGrid:
