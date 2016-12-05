@@ -24,13 +24,14 @@
 }
 
 - (void)startAnimation {
+    typeof(self) __weak weakSelf = self;
     [UIView animateWithDuration:3.5 animations:^{
-        CGRect frame = self.initFrame;
-        frame.origin.y += 2 * self.initFrame.size.height;
-        self.frame = frame;
+        CGRect frame = weakSelf.initFrame;
+        frame.origin.y += 2 * weakSelf.initFrame.size.height;
+        weakSelf.frame = frame;
     } completion:^(BOOL finished) {
-        self.frame = self.initFrame;
-        [self startAnimation];
+        self.frame = weakSelf.initFrame;
+        [weakSelf startAnimation];
     }];
     self.animationBegin = YES;
 }
