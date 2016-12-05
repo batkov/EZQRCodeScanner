@@ -9,6 +9,7 @@
 
 Actually, I want to create three mode of the animation to show in the scanner view. But I have some problems in the last mode. So the version 1.0.0 only has the mode "line" and mode "netgrid". I will create the third mode as soon as possible.    
 ![](NetGrid.png) ![](Line.png)    
+It looks like AliPay.And actually I get the idea from it,thanks for AliPay.
 The flash button can turn the flash light on or off, and the album button can open the album of your device for you to choose a QRCode picture to be analysed(Only support iPhone5S and later thanks to the arm64).    
     
 ## How To Get Started
@@ -27,7 +28,7 @@ But I still show you how to install with Cocoapods.
 * Podfile
 
 	```           
-	pod 'EZQRCodeScanner', '~> 1.0.1'
+	pod 'EZQRCodeScanner', '~> 1.0.0'
 	```
 	
 
@@ -95,7 +96,8 @@ But I still show you how to install with Cocoapods.
 ## update
 
 		1.0.0     初始化版本，包含两种扫描动画。
-		1.0.1	  添加是否显示图库和闪光灯开关
+		1.0.1	  添加是否显示图库和闪光灯开关。
+		1.0.2     解决网格图不会被释放的问题。
 
 ## Issues, Bugs, Suggestions
 
