@@ -40,6 +40,11 @@
     if (self.showButton) [self addButtons];
 }
 
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self updateFrames:self.view.bounds];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self startRunning];
@@ -160,10 +165,15 @@
     [self.captureMeradataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
     self.capturePreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
     [self.capturePreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-    self.capturePreviewLayer.frame = CGRectMake(0, 0, rect.size.width, rect.size.height);
     [self.view.layer insertSublayer:self.capturePreviewLayer atIndex:0];
+    [self updateFrames:rect];
+}
+
+- (void)updateFrames:(CGRect) rect {
+    self.capturePreviewLayer.frame = CGRectMake(0, 0, rect.size.width, rect.size.height);
     self.captureMeradataOutput.rectOfInterest = CGRectMake(kHeightPaddingAspect, kWidthPaddingAspect, kClearRectAspect * self.capturePreviewLayer.bounds.size.width / self.capturePreviewLayer.bounds.size.height , kClearRectAspect);
 }
+
 
 # pragma mark - AVCaptureMetadataOutputObjectsDelegate
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
