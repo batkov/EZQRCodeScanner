@@ -44,9 +44,13 @@
     [super viewDidLayoutSubviews];
     [self updateFrames:self.view.bounds];
     if (self.scannerView) {
+        BOOL running = [self.scannerView isAnimating];
         [self.scannerView removeFromSuperview];
         self.scannerView = nil;
         [self.view addSubview:self.scannerView];
+        if (running) {
+            [self startRunning];
+        }
     }
 }
 
@@ -172,6 +176,9 @@
     [self.capturePreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     [self.view.layer insertSublayer:self.capturePreviewLayer atIndex:0];
     [self updateFrames:rect];
+    AVCaptureConnection *previewLayerConnection=self.capturePreviewLayer.connection;
+    if ([previewLayerConnection isVideoOrientationSupported])
+        [previewLayerConnection setVideoOrientation:(AVCaptureVideoOrientation) [[UIApplication sharedApplication] statusBarOrientation]];
 }
 
 - (void)updateFrames:(CGRect) rect {

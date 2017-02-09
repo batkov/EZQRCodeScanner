@@ -109,6 +109,10 @@
     self.timer = nil;
 }
 
+- (BOOL)isAnimating {
+    return self.timer != nil;
+}
+
 # pragma mark - 描绘中间透明四周半透明的View
 - (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
