@@ -43,6 +43,11 @@
 -(void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self updateFrames:self.view.bounds];
+    if (self.scannerView) {
+        [self.scannerView removeFromSuperview];
+        self.scannerView = nil;
+        [self.view addSubview:self.scannerView];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
