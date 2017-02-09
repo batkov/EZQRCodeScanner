@@ -28,17 +28,23 @@
 @implementation EZQRCodeScannerView
 
 # pragma mark - Initial
-- (instancetype)init {
-    return [self initWithFrame:[UIScreen mainScreen].bounds];
-}
+
 - (instancetype)initWithFrame:(CGRect)frame {
+    ERInterestRect rect;
+    rect.widthPadding = kWidthPaddingAspect;
+    rect.heightPadding = kHeightPaddingAspect;
+    rect.clearRect = kClearRectAspect;
+    return [self initWithFrame:frame interestRect:rect];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame interestRect:(ERInterestRect)interestRect {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        self.scanRegionFrame = CGRectMake(self.frame.size.width * kWidthPaddingAspect,
-                                    self.frame.size.height * kHeightPaddingAspect,
-                                    self.frame.size.width * kClearRectAspect,
-                                    self.frame.size.width * kClearRectAspect);
+        self.scanRegionFrame = CGRectMake(self.frame.size.width * interestRect.widthPadding,
+                                          self.frame.size.height * interestRect.heightPadding,
+                                          self.frame.size.width * interestRect.clearRect,
+                                          self.frame.size.width * interestRect.clearRect);
     }
     return self;
 }
@@ -110,7 +116,7 @@
 }
 
 - (BOOL)isAnimating {
-    return self.timer != nil;
+    return self.timer != nil || self.netGrid.animationBegin;
 }
 
 # pragma mark - 描绘中间透明四周半透明的View

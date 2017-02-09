@@ -29,6 +29,22 @@
 
 @synthesize scanStyle = _scanStyle;
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        
+        ERInterestRect rect;
+        rect.widthPadding = kWidthPaddingAspect;
+        rect.heightPadding = kHeightPaddingAspect;
+        rect.clearRect = kClearRectAspect;
+        self.interestRect = rect;
+        
+        self.showTipsLabels = YES;
+        self.showButton = NO;
+    }
+    return self;
+}
+
 # pragma mark - Initial
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,7 +93,7 @@
 
 - (EZQRCodeScannerView *)scannerView {
     if (!_scannerView) {
-        _scannerView = [[EZQRCodeScannerView alloc] initWithFrame:self.view.bounds];
+        _scannerView = [[EZQRCodeScannerView alloc] initWithFrame:self.view.bounds interestRect:self.interestRect];
         _scannerView.scanStyle = self.scanStyle;
     }
     return _scannerView;

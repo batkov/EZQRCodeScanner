@@ -24,6 +24,7 @@
 @property (weak, nonatomic) id<EZQRCodeScannerDelegate> delegate;
 @property (nonatomic) EZScanStyle scanStyle;
 @property (nonatomic) BOOL showButton;
-@property (nonatomic) BOOL showTipsLabels; // Default is NO
+@property (nonatomic) BOOL showTipsLabels; // Default is YES
+@property (nonatomic, assign) ERInterestRect interestRect;// 0.15/0.25/0.7 by default
 
 @end

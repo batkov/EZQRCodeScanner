@@ -13,6 +13,12 @@
 #define kHeightPaddingAspect .25        //中间透明部分与上方的间隔占整个View的比例
 #define kClearRectAspect .70            //中间透明部分的宽高占整个View的比例
 
+typedef struct {
+    float widthPadding;
+    float heightPadding;
+    float clearRect;
+} ERInterestRect;
+
 typedef NS_ENUM(NSUInteger, EZScanStyle) {
     EZScanStyleNone,
     EZScanStyleLine,
@@ -25,8 +31,8 @@ typedef NS_ENUM(NSUInteger, EZScanStyle) {
 
 @property (nonatomic) EZScanStyle scanStyle;
 
-- (instancetype)init;
-- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)initWithFrame:(CGRect)frame interestRect:(ERInterestRect)interestRect NS_DESIGNATED_INITIALIZER;
+
 - (void)startAnimation;   // 控制QRCodeScanner开始扫描，同时启动定时器NSTimer实现动画效果
 - (void)stopAnimation;    // 为了不让NSTimer处于工作状态，可手动停止二维码扫描
 - (BOOL)isAnimating;
