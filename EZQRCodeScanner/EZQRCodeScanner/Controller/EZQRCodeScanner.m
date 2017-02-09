@@ -36,13 +36,8 @@
     self.title = @"扫描二维码";
     [self setupAVCaptureComponent:self.view.layer.bounds];
     [self.view addSubview:self.scannerView];
-    [self addTipsLabel];
+    if (self.showTipsLabels) [self addTipsLabel];
     if (self.showButton) [self addButtons];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -68,7 +63,7 @@
 
 - (EZQRCodeScannerView *)scannerView {
     if (!_scannerView) {
-        _scannerView = [[EZQRCodeScannerView alloc] initWithFrame:self.view.frame];
+        _scannerView = [[EZQRCodeScannerView alloc] initWithFrame:self.view.bounds];
         _scannerView.scanStyle = self.scanStyle;
     }
     return _scannerView;

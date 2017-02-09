@@ -24,5 +24,6 @@
 @property (weak, nonatomic) id<EZQRCodeScannerDelegate> delegate;
 @property (nonatomic) EZScanStyle scanStyle;
 @property (nonatomic) BOOL showButton;
+@property (nonatomic) BOOL showTipsLabels; // Default is NO
 
 @end
